@@ -23,6 +23,7 @@ from hypothesis.strategies import (
 )
 
 
+
 ## HYPOTHESIS Tests
 @given(data(), named_tensor())
 def test_stack_basic(data, x):
@@ -533,6 +534,11 @@ def test_topk():
     )
     assert_match(base[0], expected[0])
     assert_match(base[1], expected[1])
+
+def test_chunk():
+    base_torch = torch.rand([10, 10])
+    dim_names = ("dim1", "dim2")
+    base = ntorch.tensor(base_torch, names=dim_names).chunk("dim1", 3)
 
 
 def test_index_set():
