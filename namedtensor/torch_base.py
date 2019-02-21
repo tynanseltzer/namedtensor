@@ -206,6 +206,12 @@ class NTorch(type):
     def build(init, names, *args, **kwargs):
         tensor = init(*args, **kwargs)
         return NamedTensor(tensor, names)
+    
+    @staticmethod
+    def chunk(tensor, chunks, dim=0):
+        old_names = tensor._schema._names
+        chunks = tensor._tensor.chunk(chunks, dim)
+        return [ntorch.tensor(chunk, old_names) for chunk in chunks]
 
     @staticmethod
     def tensor(*args, **kwargs):
