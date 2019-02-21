@@ -208,9 +208,9 @@ class NTorch(type):
         return NamedTensor(tensor, names)
     
     @staticmethod
-    def chunk(tensor, chunks, dim=0):
+    def chunk(tensor, chunks, dim):
         old_names = tensor._schema._names
-        chunks = tensor._tensor.chunk(chunks, dim)
+        chunks = tensor._tensor.chunk(chunks, dim=tensor._schema.get(dim))
         return [ntorch.tensor(chunk, old_names) for chunk in chunks]
 
     @staticmethod
